@@ -2408,7 +2408,9 @@ function App() {
         const string = `${random}/contest.list?apiKey=${key}&time=${time}#${secret}`;
         const hash = sha512(string);
         const url = `https://codeforces.com/api/contest.list?apiKey=${key}&time=${time}&apiSig=${random}${hash}`;
-        let res = await fetch(url);
+        let res = await fetch(url,{
+          mode:'no-cors'
+        });
         let response = await res.json();
         console.log(response);
         let data = response["result"];
@@ -2422,17 +2424,17 @@ function App() {
     }
 
     const codechef = async ()=>{
-        // const url = "https://www.codechef.com/api/list/contests/all&offset=0&mode=all"
-        // const res = await fetch(url,{
-        //     mode:'no-cors'
-        // });
-        // console.log(res)
-        // const response = await res.json();
-        // console.log(response);
+        const url = "https://www.codechef.com/api/list/contests/all&offset=0&mode=all"
+        const res = await fetch(url,{
+            mode:'no-cors'
+        });
+        console.log(res)
+        const response = await res.json();
+        console.log(response);
     }
 
   useEffect(() => {
-    // codechef();
+    codechef();
     codeforces();
     }, []);
 
