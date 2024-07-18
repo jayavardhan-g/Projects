@@ -2425,9 +2425,10 @@ function App() {
 
     const codechef = async ()=>{
         const url = "https://www.codechef.com/api/list/contests/all&offset=0&mode=all"
-        const res = await fetch(url,{
-            mode:'no-cors'
-        });
+        // const res = await fetch(url,{
+        //     mode:'no-cors'
+        // });
+        const res = await fetch(url);
         console.log(res)
         const response = await res.json();
         console.log(response);
