@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    background-color: #0f0f0f;
+}
+
+.round-grad{
+    background: radial-gradient(#1d1011 10%,transparent);
+}
+
+
+.whiteopacity{
+    background: linear-gradient( to top, transparent, rgba(255, 255, 255, 0.729), transparent );
+}
