@@ -2408,6 +2408,7 @@ function App() {
         const string = `${random}/contest.list?apiKey=${key}&time=${time}#${secret}`;
         const hash = sha512(string);
         const url = `https://codeforces.com/api/contest.list?apiKey=${key}&time=${time}&apiSig=${random}${hash}`;
+        console.log(url);
         let res = await fetch(url,{
           mode:'no-cors'
         });
