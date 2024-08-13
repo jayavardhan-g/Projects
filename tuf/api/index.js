@@ -21,7 +21,7 @@ app.listen(3000,()=>{
     console.log(`Listening on port 3000`);
 });
 
-const backendurl= 'https://tufbackend-docm.onrender.com/getRows'
+const backendurl= 'https://tufbackend-docm.onrender.com/restart'
 const job = new cron.CronJob('*/14 * * * *', ()=>{
     console.log("Restarting server");
 
