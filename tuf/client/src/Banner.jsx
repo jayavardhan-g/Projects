@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Timer from "./Timer"
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   
@@ -32,6 +33,13 @@ const Banner = () => {
       </div>
     </a>
     }
+    <div>
+      <div className="text-white mt-16 p-4 m-4 bg-[#34bdf4] rounded-xl">
+        <Link to="/set">
+          Update Banner
+        </Link>
+      </div>
+    </div>
 </>
   )
 }

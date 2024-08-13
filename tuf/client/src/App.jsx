@@ -38,13 +38,13 @@ function App() {
 <>
   <Navbar/>
 
-  <div className="p-6 pt-6 flex justify-center w-full">
+  <div className="p-6 pt-6 flex-col items-center flex justify-center w-full">
       <Routes>
         <Route path="/set" element={<BannerSettings/>} />
         <Route path="/" element={<Banner/>}/>
       </Routes>
-    
   </div>
+  
 
 </>
   )

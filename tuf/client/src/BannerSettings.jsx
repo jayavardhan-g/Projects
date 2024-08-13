@@ -23,6 +23,7 @@ export default function BannerSettings() {
     const [title,setTitle] = useState("");
     const [link,setLink] = useState("");
     const [on,setOn] = useState(true);
+    const navigate = useNavigate();    
 
     const submit = async ()=>{
         // const data = {date,on,link,title};
@@ -34,9 +35,8 @@ export default function BannerSettings() {
             },
             body:JSON.stringify({date,on,link,title}),
         })
-
         console.log(res.status);
-
+        navigate('../');
     }
 
     useEffect(()=>{
