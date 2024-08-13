@@ -10,19 +10,25 @@ function App() {
   const {banner,setBanner} = useContext(BannerContext);
 
   const getData = async ()=>{
-    const res = await fetch("http://localhost:3000/getRows");
+    const res = await fetch("http://https://tufbackend-docm.onrender.com/getRows");
     const response = await res.json();
     setBanner(response[0]);
-    // setOn(response[0].BannerVisibility);
-    // setTime(response[0].BannerTime);
-    // console.log(response[0]);
   }
 
-  const [pos, setPos] = useState({x:0,y:0});
+  // const clicked= async ()=>{
 
-  useEffect(()=>{
-    console.log(banner)
-  })
+  //   const data = {HI:"Hi"};
+
+  //   const res = await fetch("https://tufbackend-docm.onrender.com/test",{
+  //     method:"post",
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body:JSON.stringify(data)
+  //   })
+  // }
+
+  const [pos, setPos] = useState({x:0,y:0});
 
   useEffect(()=>{
     getData();
@@ -31,8 +37,7 @@ function App() {
   return (
 <>
   <Navbar/>
-  {/* <div className={` w-[300px] h-[300px] round-grad z-10 rounded-full bg-white absolute top-[40%] left-[60%]`} >
-  </div> */}
+
   <div className="p-6 pt-6 flex justify-center w-full">
       <Routes>
         <Route path="/set" element={<BannerSettings/>} />
@@ -40,6 +45,7 @@ function App() {
       </Routes>
     
   </div>
+
 </>
   )
 }

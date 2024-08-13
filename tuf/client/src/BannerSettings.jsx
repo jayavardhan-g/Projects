@@ -4,7 +4,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Switch from '@mui/material/Switch';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { BannerContext } from './BannerContext';
+import { useNavigate } from 'react-router-dom';
 
 const Label = ()=>{
 return(
@@ -15,29 +17,41 @@ return(
 }
 
 export default function BannerSettings() {
-    const [date,setDate] = useState("Tue Jan 01 2030 00:00:00 GMT+0530 (India Standard Time)");
+    const {banner,setBanner}= useContext(BannerContext);
+
+    const [date,setDate] = useState(new Date());
     const [title,setTitle] = useState("");
     const [link,setLink] = useState("");
     const [on,setOn] = useState(true);
 
     const submit = async ()=>{
-        const data = {date,on,link,title};
-        console.log(data);        
-        const res = await fetch("http://localhost:3000/update",{
+        // const data = {date,on,link,title};
+        // console.log(data);        
+        const res = await fetch("https://tufbackend-docm.onrender.com/update",{
             method:"POST",
-            body:data,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({date,on,link,title}),
         })
 
-        const response = await res.json();
-        console.log("response",response);
+        console.log(res.status);
+
     }
+
+    useEffect(()=>{
+        setDate(new Date(banner.BannerTime));
+        setLink(banner.BannerLink);
+        setOn(banner.BannerVisibility);
+        setTitle(banner.BannerTitle);
+    },[banner])
 
     return (
 
 <div className='flex justify-start flex-col w-full'>  
 
 <div>
-    <Switch className='border-[#d92929] border-2 rounded-full' onClick={()=>{setOn(!on)}} defaultChecked={false} />
+    <Switch className='border-[#d92929] border-2 rounded-full' onClick={()=>{setOn(!on)}} checked={on} />
 </div>
 
 <div>
@@ -62,7 +76,7 @@ export default function BannerSettings() {
         ]}
         >
         <DemoItem label={<Label/>}>
-          <DateTimePicker onChange={(newdate)=>{setDate(newdate.$d)}} defaultValue={dayjs('2022-04-17T15:30')} />
+          <DateTimePicker onChange={(newdate)=>{setDate(newdate.$d)}} defaultValue={dayjs(date)} />
         </DemoItem>
       </DemoContainer>
     </LocalizationProvider>
