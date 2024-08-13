@@ -5,6 +5,8 @@ const mysql = require('mysql2')
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+const cron = require('cron');
+const https = require('https')
 
 const mysqluri= "mysql://avnadmin:AVNS_SK3s2qzq__67QyqwEEY@tuf-1234-itsmellucas-1234.k.aivencloud.com:28395/tuf?ssl-mode=REQUIRED"
 
@@ -19,6 +21,25 @@ app.listen(3000,()=>{
     console.log(`Listening on port 3000`);
 });
 
+const backendurl= 'https://tufbackend-docm.onrender.com/getRows'
+const job = new cron.CronJob('*/14 * * * *', ()=>{
+    console.log("Restarting server");
+
+    https.
+        get(backendurl, (res)=>{
+            if(res.statusCode==200){
+                console.log("Server restarted");
+            }else{
+                console.error("Failed to restart server");
+            }
+        })
+        .on('error',(error)=>{
+            console.log("Error during restart",error.message);
+        })
+})
+
+job.start();
+
 app.post('/update',(req,res)=>{
 
     const {date,link,on,title}= req.body;
@@ -31,7 +52,7 @@ app.post('/update',(req,res)=>{
             res.send(error);
         }
         else{
-            console.log(rows);
+            // console.log(rows);
             // console.log(fields);
             // console.log("successful");
             res.status(200);
@@ -50,8 +71,8 @@ app.get('/getRows',(req,res)=>{
             res.send(error);
         }
         else{
-            console.log(rows);
-            console.log(fields);
+            // console.log(rows);
+            // console.log(fields);
             console.log("successful");
 
             res.send(rows);
@@ -59,7 +80,7 @@ app.get('/getRows',(req,res)=>{
     })  
 })
 
-app.post('/test',(req,res)=>{
-    console.log(req);
-    res.json(req.body);
+app.get('/restart',(req,res)=>{
+    console.log("Server restarted")
+    res.send("Server Restarted")
 })
