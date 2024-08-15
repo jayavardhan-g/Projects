@@ -12,12 +12,16 @@ const mysqluri= "mysql://avnadmin:AVNS_SK3s2qzq__67QyqwEEY@tuf-1234-itsmellucas-
 
 var connection = mysql.createConnection(mysqluri)
 
+connection.config.enableKeepAlive=true;
+connection.config.keepAliveInitialDelay=10000;
+
 connection.connect((err)=>{
     if(err)console.log(err);
     else console.log("Connected");
+    
 })
 
-app.listen(3000,()=>{
+app.listen(3001,()=>{
     console.log(`Listening on port 3000`);
 });
 
@@ -36,6 +40,12 @@ const job = new cron.CronJob('*/14 * * * *', ()=>{
         .on('error',(error)=>{
             console.log("Error during restart",error.message);
         })
+    
+    connection.query(`SELECT 1 + 1 as Solution`, (err,rows)=>{
+        if(err)console.log(err);
+        else console.log("DB pinged");
+    })
+    
 })
 
 job.start();
